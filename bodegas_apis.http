@@ -1,0 +1,58 @@
+@url = http://localhost:3000
+
+###get bodegas
+GET {{url}}/bodegas
+
+###get single bodega
+GET {{url}}/bodegas/621334dc67b45994295ae977
+
+###create bodega
+POST {{url}}/bodegas
+Content-Type: application/json
+
+{
+  "identificador": "BO01",
+  "nombre": "Cubierta Mantis",
+  "direccion": "Lugar desconocido"
+}
+
+###update bodega
+PUT {{url}}/bodegas/6213354367b45994295ae982
+Content-Type: application/json
+
+{
+  "direccion": "Debajo de mi cama"
+}
+
+###delete bodega
+DELETE {{url}}/bodegas/621334dc67b45994295ae977
+
+
+//apis a bodegas_articulos
+
+###get bodegas_articulos
+GET {{url}}/bodegas_articulos
+
+###get single bodega_articulo
+GET {{url}}/bodegas_articulos/6213b9e64a235020894cc928
+
+###create bodega_articulo
+POST {{url}}/bodegas_articulos
+Content-Type: application/json
+
+{
+  "id_bodega": "6213354367b45994295ae984",
+  "id_articulo": "621329d74ddfebad3eaf56b2",
+  "cantidad": 3
+}
+
+###update bodega_artic
+PUT {{url}}/bodegas_articulos/6213b9e64a235020894cc928
+Content-Type: application/json
+
+{
+  "cantidad": 999
+}
+
+###delete bodega
+DELETE {{url}}/bodegas_articulos/6213b9e64a235020894cc928

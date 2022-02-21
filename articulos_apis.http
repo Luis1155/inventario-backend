@@ -1,0 +1,29 @@
+@url = http://localhost:3000
+
+###get articulos
+GET {{url}}/articulos
+
+###get single articulo
+GET {{url}}/articulos/6213289b5e2eba3cbb0a8c39
+
+###create articulo
+POST {{url}}/articulos
+Content-Type: application/json
+
+{
+  "identificador": "VA123",
+  "nombre": "Lapiz",
+  "descripcion": "Articulo para escribir en la pared",
+  "precio_unidad": 1500
+}
+
+###update articulo
+PUT {{url}}/articulos/6213289b5e2eba3cbb0a8c39
+Content-Type: application/json
+
+{
+  "precio_unidad": 1500
+}
+
+###delete articulo
+DELETE {{url}}/articulos/6213d919c06f7944baa83a3e
