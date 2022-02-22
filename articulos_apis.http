@@ -1,4 +1,4 @@
-@url = http://localhost:3000
+@url = https://inventario-fonseca.herokuapp.com
 
 ###get articulos
 GET {{url}}/articulos
@@ -11,9 +11,9 @@ POST {{url}}/articulos
 Content-Type: application/json
 
 {
-  "identificador": "VA123",
+  "identificador": "LA001",
   "nombre": "Lapiz",
-  "descripcion": "Articulo para escribir en la pared",
+  "descripcion": "Articulo para escribir",
   "precio_unidad": 1500
 }
 
