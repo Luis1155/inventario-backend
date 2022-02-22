@@ -1,4 +1,5 @@
 import { RequestHandler } from "express";
+import Articulo from "../models/Articulo";
 import Bodega from "../models/Bodega";
 import BodegaArticulo from "../models/BodegaArticulo";
 
@@ -32,7 +33,7 @@ export const crearBodega: RequestHandler = async (req, res) => {
       identificador: req.body.identificador,
     });
     console.log(bodegaEncontrada);
-    
+
     if (bodegaEncontrada)
       return res.status(400).json({ message: "El identificador ya existe" });
     const bodega = new Bodega(req.body);
@@ -97,6 +98,38 @@ export const obtenerBodegaArticulo: RequestHandler = async (req, res) => {
       });
     res.json(baEncontrada);
   } catch (error) {
+    res.status(404).json({
+      message: `El elemento con identificador ${req.params.id} no existe`,
+    });
+  }
+};
+
+export const obtenerArticulosDeBodega: RequestHandler = async (req, res) => {
+  try {
+    const articulosEncontrados = await BodegaArticulo.find({
+      id_bodega: req.params.id_bodega,
+    });
+    if (articulosEncontrados.length == 0)
+      return res.status(404).json({
+        message: `Esta bodega no contiene articulos`,
+      });
+    for (let i = 0; i < articulosEncontrados.length; i++) {
+      let articulo = await Articulo.findById(
+        articulosEncontrados[i].id_articulo
+      );
+      articulosEncontrados[i] = {
+        ...articulosEncontrados[i]._doc,
+        nombre: articulo.nombre,
+        descripcion: articulo.descripcion,
+        precio_unidad: articulo.precio_unidad,
+      };
+      delete articulosEncontrados[i]["createdAt"];
+      delete articulosEncontrados[i]["updatedAt"];
+    }
+    res.json(articulosEncontrados);
+  } catch (error) {
+    console.log(error);
+
     res.status(404).json({
       message: `El elemento con identificador ${req.params.id} no existe`,
     });

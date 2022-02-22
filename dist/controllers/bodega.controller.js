@@ -12,7 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.eliminarBodegaArticulo = exports.actualizarBodegaArticulo = exports.crearBodegaArticulo = exports.obtenerBodegaArticulo = exports.obtenerBodegasArticulos = exports.eliminarBodega = exports.actualizarBodega = exports.crearBodega = exports.obtenerBodega = exports.obtenerBodegas = void 0;
+exports.eliminarBodegaArticulo = exports.actualizarBodegaArticulo = exports.crearBodegaArticulo = exports.obtenerArticulosDeBodega = exports.obtenerBodegaArticulo = exports.obtenerBodegasArticulos = exports.eliminarBodega = exports.actualizarBodega = exports.crearBodega = exports.obtenerBodega = exports.obtenerBodegas = void 0;
+const Articulo_1 = __importDefault(require("../models/Articulo"));
 const Bodega_1 = __importDefault(require("../models/Bodega"));
 const BodegaArticulo_1 = __importDefault(require("../models/BodegaArticulo"));
 const obtenerBodegas = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -117,6 +118,31 @@ const obtenerBodegaArticulo = (req, res) => __awaiter(void 0, void 0, void 0, fu
     }
 });
 exports.obtenerBodegaArticulo = obtenerBodegaArticulo;
+const obtenerArticulosDeBodega = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const articulosEncontrados = yield BodegaArticulo_1.default.find({
+            id_bodega: req.params.id_bodega,
+        });
+        if (articulosEncontrados.length == 0)
+            return res.status(404).json({
+                message: `Esta bodega no contiene articulos`,
+            });
+        for (let i = 0; i < articulosEncontrados.length; i++) {
+            let articulo = yield Articulo_1.default.findById(articulosEncontrados[i].id_articulo);
+            articulosEncontrados[i] = Object.assign(Object.assign({}, articulosEncontrados[i]._doc), { nombre: articulo.nombre, descripcion: articulo.descripcion, precio_unidad: articulo.precio_unidad });
+            delete articulosEncontrados[i]["createdAt"];
+            delete articulosEncontrados[i]["updatedAt"];
+        }
+        res.json(articulosEncontrados);
+    }
+    catch (error) {
+        console.log(error);
+        res.status(404).json({
+            message: `El elemento con identificador ${req.params.id} no existe`,
+        });
+    }
+});
+exports.obtenerArticulosDeBodega = obtenerArticulosDeBodega;
 const crearBodegaArticulo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const baEncontrada = yield BodegaArticulo_1.default.findOne({

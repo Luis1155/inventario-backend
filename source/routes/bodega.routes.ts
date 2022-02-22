@@ -15,7 +15,7 @@ router.delete("/bodegas/:id", bodegaCtrl.eliminarBodega);
 
 router.get("/bodegas_articulos", bodegaCtrl.obtenerBodegasArticulos);
 
-router.get("/bodegas_articulos/:id", bodegaCtrl.obtenerBodegaArticulo);
+router.get("/bodegas_articulos/:id_bodega", bodegaCtrl.obtenerArticulosDeBodega);
 
 router.post("/bodegas_articulos", bodegaCtrl.crearBodegaArticulo);
 
