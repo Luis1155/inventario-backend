@@ -36,7 +36,6 @@ const obtenerTransacciones = (req, res) => __awaiter(void 0, void 0, void 0, fun
 });
 exports.obtenerTransacciones = obtenerTransacciones;
 const crearTransaccion = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // console.log(req.body);
     let { id_bodega_origen, id_bodega_destino, id_articulo, cantidad, fecha, hora, } = req.body;
     try {
         let articuloOrigen = yield BodegaArticulo_1.default.findOne({
@@ -71,7 +70,6 @@ const crearTransaccion = (req, res) => __awaiter(void 0, void 0, void 0, functio
         res.json(transaccionGuardado);
     }
     catch (error) {
-        console.log(error);
         res.json(error);
     }
 });

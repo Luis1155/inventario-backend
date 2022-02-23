@@ -15,9 +15,9 @@ export const obtenerTransacciones: RequestHandler = async (req, res) => {
         transacciones[i].id_bodega_destino
       );
       let articulo = await Articulo.findById(transacciones[i].id_articulo);
-      transacciones[i].id_bodega_origen = bodega_origen.nombre
-      transacciones[i].id_bodega_destino = bodega_destino.nombre
-      transacciones[i].id_articulo = articulo.nombre
+      transacciones[i].id_bodega_origen = bodega_origen.nombre;
+      transacciones[i].id_bodega_destino = bodega_destino.nombre;
+      transacciones[i].id_articulo = articulo.nombre;
     }
     res.json(transacciones);
   } catch (error) {
@@ -26,7 +26,6 @@ export const obtenerTransacciones: RequestHandler = async (req, res) => {
 };
 
 export const crearTransaccion: RequestHandler = async (req, res) => {
-  // console.log(req.body);
   let {
     id_bodega_origen,
     id_bodega_destino,
@@ -68,7 +67,6 @@ export const crearTransaccion: RequestHandler = async (req, res) => {
     const transaccionGuardado = await transaccion.save();
     res.json(transaccionGuardado);
   } catch (error) {
-    console.log(error);
     res.json(error);
   }
 };
