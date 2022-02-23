@@ -110,9 +110,7 @@ export const obtenerArticulosDeBodega: RequestHandler = async (req, res) => {
       id_bodega: req.params.id_bodega,
     });
     if (articulosEncontrados.length == 0)
-      return res.status(404).json({
-        message: `Esta bodega no contiene articulos`,
-      });
+      return res.json([]);
     for (let i = 0; i < articulosEncontrados.length; i++) {
       let articulo = await Articulo.findById(
         articulosEncontrados[i].id_articulo
