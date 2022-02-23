@@ -34,8 +34,6 @@ export const crearBodega: RequestHandler = async (req, res) => {
     const bodegaEncontrada = await Bodega.findOne({
       identificador: req.body.identificador,
     });
-    console.log(bodegaEncontrada);
-
     if (bodegaEncontrada)
       return res.json({ message: "El identificador ya existe", error: true });
     const bodega = new Bodega(req.body);
@@ -134,8 +132,6 @@ export const obtenerArticulosDeBodega: RequestHandler = async (req, res) => {
     }
     res.status(200).json(articulosEncontrados);
   } catch (error) {
-    console.log(error);
-
     res.json({
       message: `El elemento no existe`,
       error: true,

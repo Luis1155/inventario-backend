@@ -28,14 +28,16 @@ const obtenerArticulo = (req, res) => __awaiter(void 0, void 0, void 0, function
     try {
         const articuloEncontrado = yield Articulo_1.default.findById(req.params.id);
         if (!articuloEncontrado)
-            return res.status(404).json({
-                message: `El articulo con identificador ${req.params.id} no existe`,
+            return res.json({
+                message: `El articulo no existe`,
+                error: true,
             });
         res.json(articuloEncontrado);
     }
     catch (error) {
-        res.status(404).json({
-            message: `El articulo con identificador ${req.params.id} no existe`,
+        res.json({
+            message: `El articulo no existe`,
+            error: true,
         });
     }
 });
@@ -52,7 +54,7 @@ const crearArticulo = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.json(articuloGuardado);
     }
     catch (error) {
-        res.status(400).json(error);
+        res.json(error);
     }
 });
 exports.crearArticulo = crearArticulo;
@@ -60,14 +62,16 @@ const actualizarArticulo = (req, res) => __awaiter(void 0, void 0, void 0, funct
     try {
         const articuloActualizado = yield Articulo_1.default.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!articuloActualizado)
-            return res.status(404).json({
-                message: `El articulo con identificador ${req.params.id} no existe`,
+            return res.json({
+                message: `El articulo no existe`,
+                error: true,
             });
         res.json(articuloActualizado);
     }
     catch (error) {
-        res.status(404).json({
-            message: `El articulo con identificador ${req.params.id} no existe`,
+        res.json({
+            message: `El articulo no existe`,
+            error: true,
         });
     }
 });
@@ -76,14 +80,16 @@ const eliminarArticulo = (req, res) => __awaiter(void 0, void 0, void 0, functio
     try {
         const articuloEliminado = yield Articulo_1.default.findByIdAndDelete(req.params.id);
         if (!articuloEliminado)
-            return res.status(404).json({
-                message: `El articulo con identificador ${req.params.id} no existe`,
+            return res.json({
+                message: `El articulo no existe`,
+                error: true,
             });
         res.json(articuloEliminado);
     }
     catch (error) {
-        return res.status(404).json({
-            message: `El articulo con identificador ${req.params.id} no existe`,
+        return res.json({
+            message: `El articulo no existe`,
+            error: true,
         });
     }
 });

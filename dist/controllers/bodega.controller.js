@@ -30,14 +30,16 @@ const obtenerBodega = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     try {
         const bodegaEncontrada = yield Bodega_1.default.findById(req.params.id);
         if (!bodegaEncontrada)
-            return res.status(404).json({
-                message: `La bodega con identificador ${req.params.id} no existe`,
+            return res.json({
+                message: `La bodega no existe`,
+                error: true,
             });
         res.json(bodegaEncontrada);
     }
     catch (error) {
-        res.status(404).json({
-            message: `La bodega con identificador ${req.params.id} no existe`,
+        res.json({
+            message: `La bodega no existe`,
+            error: true,
         });
     }
 });
@@ -47,15 +49,14 @@ const crearBodega = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const bodegaEncontrada = yield Bodega_1.default.findOne({
             identificador: req.body.identificador,
         });
-        console.log(bodegaEncontrada);
         if (bodegaEncontrada)
-            return res.status(400).json({ message: "El identificador ya existe" });
+            return res.json({ message: "El identificador ya existe", error: true });
         const bodega = new Bodega_1.default(req.body);
         const bodegaGuardada = yield bodega.save();
         res.json(bodegaGuardada);
     }
     catch (error) {
-        res.status(400).json(error);
+        res.json(error);
     }
 });
 exports.crearBodega = crearBodega;
@@ -63,14 +64,16 @@ const actualizarBodega = (req, res) => __awaiter(void 0, void 0, void 0, functio
     try {
         const bodegaActualizada = yield Bodega_1.default.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!bodegaActualizada)
-            return res.status(404).json({
-                message: `La bodega con identificador ${req.params.id} no existe`,
+            return res.json({
+                message: `La bodega no existe`,
+                error: true,
             });
         res.json(bodegaActualizada);
     }
     catch (error) {
-        res.status(404).json({
-            message: `La bodega con identificador ${req.params.id} no existe`,
+        res.json({
+            message: `La bodega no existe`,
+            error: true,
         });
     }
 });
@@ -79,14 +82,16 @@ const eliminarBodega = (req, res) => __awaiter(void 0, void 0, void 0, function*
     try {
         const bodegaEliminada = yield Bodega_1.default.findByIdAndDelete(req.params.id);
         if (!bodegaEliminada)
-            return res.status(404).json({
-                message: `La bodega con identificador ${req.params.id} no existe`,
+            return res.json({
+                message: `La bodega no existe`,
+                error: true,
             });
         res.json(bodegaEliminada);
     }
     catch (error) {
-        return res.status(404).json({
-            message: `La bodega con identificador ${req.params.id} no existe`,
+        return res.json({
+            message: `La bodega no existe`,
+            error: true,
         });
     }
 });
@@ -106,14 +111,16 @@ const obtenerBodegaArticulo = (req, res) => __awaiter(void 0, void 0, void 0, fu
     try {
         const baEncontrada = yield BodegaArticulo_1.default.findById(req.params.id);
         if (!baEncontrada)
-            return res.status(404).json({
-                message: `El elemento con identificador ${req.params.id} no existe`,
+            return res.json({
+                message: `El elemento no existe`,
+                error: true,
             });
         res.json(baEncontrada);
     }
     catch (error) {
-        res.status(404).json({
-            message: `El elemento con identificador ${req.params.id} no existe`,
+        res.json({
+            message: `El elemento no existe`,
+            error: true,
         });
     }
 });
@@ -134,9 +141,9 @@ const obtenerArticulosDeBodega = (req, res) => __awaiter(void 0, void 0, void 0,
         res.status(200).json(articulosEncontrados);
     }
     catch (error) {
-        console.log(error);
-        res.status(404).json({
-            message: `El elemento con identificador ${req.params.id} no existe`,
+        res.json({
+            message: `El elemento no existe`,
+            error: true,
         });
     }
 });
@@ -160,7 +167,7 @@ const crearArticuloDeBodega = (req, res) => __awaiter(void 0, void 0, void 0, fu
         res.json(baGuardada);
     }
     catch (error) {
-        res.status(400).json(error);
+        res.json(error);
     }
 });
 exports.crearArticuloDeBodega = crearArticuloDeBodega;
@@ -168,14 +175,16 @@ const actualizarBodegaArticulo = (req, res) => __awaiter(void 0, void 0, void 0,
     try {
         const baActualizada = yield BodegaArticulo_1.default.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!baActualizada)
-            return res.status(404).json({
-                message: `El elemento con identificador ${req.params.id} no existe`,
+            return res.json({
+                message: `El elemento no existe`,
+                error: true,
             });
         res.json(baActualizada);
     }
     catch (error) {
-        res.status(404).json({
-            message: `El elemento con identificador ${req.params.id} no existe`,
+        res.json({
+            message: `El elemento no existe`,
+            error: true,
         });
     }
 });
@@ -184,14 +193,16 @@ const eliminarBodegaArticulo = (req, res) => __awaiter(void 0, void 0, void 0, f
     try {
         const baEliminada = yield BodegaArticulo_1.default.findByIdAndDelete(req.params.id);
         if (!baEliminada)
-            return res.status(404).json({
-                message: `El elemento con identificador ${req.params.id} no existe`,
+            return res.json({
+                message: `El elemento no existe`,
+                error: true,
             });
         res.json(baEliminada);
     }
     catch (error) {
-        return res.status(404).json({
-            message: `El elemento con identificador ${req.params.id} no existe`,
+        return res.json({
+            message: `El elemento no existe`,
+            error: true,
         });
     }
 });

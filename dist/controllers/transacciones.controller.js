@@ -72,7 +72,7 @@ const crearTransaccion = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
     catch (error) {
         console.log(error);
-        res.status(400).json(error);
+        res.json(error);
     }
 });
 exports.crearTransaccion = crearTransaccion;
