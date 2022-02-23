@@ -12,9 +12,9 @@ POST {{url}}/bodegas
 Content-Type: application/json
 
 {
-  "identificador": "BO002",
-  "nombre": "Bodega mediana",
-  "direccion": "Calle 4 no. 5-6"
+  "identificador": "BO005",
+  "nombre": "Bodega extranjera",
+  "direccion": "Muy lejos"
 }
 
 ###update bodega

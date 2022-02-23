@@ -9,6 +9,7 @@ const cors_1 = __importDefault(require("cors"));
 const config_1 = __importDefault(require("./config"));
 const articulo_routes_1 = __importDefault(require("./routes/articulo.routes"));
 const bodega_routes_1 = __importDefault(require("./routes/bodega.routes"));
+const transacciones_routes_1 = __importDefault(require("./routes/transacciones.routes"));
 const app = (0, express_1.default)();
 app.set("port", config_1.default.PORT);
 app.use((0, morgan_1.default)("dev")); //registro de las peticiones
@@ -17,4 +18,5 @@ app.use(express_1.default.json()); //permite reconocer los objetos json de los p
 app.use(express_1.default.urlencoded({ extended: false })); //permite reconocer los campos de los formularios post
 app.use(articulo_routes_1.default); //reconocer las urls
 app.use(bodega_routes_1.default);
+app.use(transacciones_routes_1.default);
 exports.default = app;

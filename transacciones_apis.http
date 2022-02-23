@@ -1,0 +1,18 @@
+# @url = https://inventario-fonseca.herokuapp.com
+@url = http://localhost:4000
+
+###get transacciones
+GET {{url}}/transacciones
+
+###create bodega
+POST {{url}}/transacciones
+Content-Type: application/json
+
+{
+  "id_bodega_origen": "6213dbc0f25ba4f4df020ca0",
+  "id_bodega_destino": "621422b59eb4d8491ac77237",
+  "id_articulo": "621423f19eb4d8491ac7724d",
+  "cantidad": 100,
+  "fecha": "2022-02-23",
+  "hora": "03:48 am"
+}
