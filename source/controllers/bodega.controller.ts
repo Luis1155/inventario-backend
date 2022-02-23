@@ -109,8 +109,7 @@ export const obtenerArticulosDeBodega: RequestHandler = async (req, res) => {
     const articulosEncontrados = await BodegaArticulo.find({
       id_bodega: req.params.id_bodega,
     });
-    if (articulosEncontrados.length == 0)
-      return res.json([]);
+    if (articulosEncontrados.length == 0) return res.json([]);
     for (let i = 0; i < articulosEncontrados.length; i++) {
       let articulo = await Articulo.findById(
         articulosEncontrados[i].id_articulo
@@ -119,12 +118,13 @@ export const obtenerArticulosDeBodega: RequestHandler = async (req, res) => {
         ...articulosEncontrados[i]._doc,
         nombre: articulo.nombre,
         descripcion: articulo.descripcion,
+        identificador: articulo.identificador,
         precio_unidad: articulo.precio_unidad,
       };
       delete articulosEncontrados[i]["createdAt"];
       delete articulosEncontrados[i]["updatedAt"];
     }
-    res.json(articulosEncontrados);
+    res.status(200).json(articulosEncontrados);
   } catch (error) {
     console.log(error);
 
@@ -134,14 +134,20 @@ export const obtenerArticulosDeBodega: RequestHandler = async (req, res) => {
   }
 };
 
-export const crearBodegaArticulo: RequestHandler = async (req, res) => {
+export const crearArticuloDeBodega: RequestHandler = async (req, res) => {
   try {
     const baEncontrada = await BodegaArticulo.findOne({
       id_bodega: req.body.id_bodega,
-      id_articulo: req.body.id_articulo
+      id_articulo: req.body.id_articulo,
     });
-    if (baEncontrada)
-      return res.status(400).json({ message: "El elemento ya existe" });
+    if (baEncontrada) {
+      baEncontrada.cantidad =
+        baEncontrada.cantidad + parseInt(req.body.cantidad);
+      baEncontrada.save();
+      return res
+        .status(200)
+        .json({ message: "Elemento actualizado", error: false });
+    }
     const ba = new BodegaArticulo(req.body);
     const baGuardada = await ba.save();
     res.json(baGuardada);

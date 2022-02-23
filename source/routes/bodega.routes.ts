@@ -17,7 +17,7 @@ router.get("/bodegas_articulos", bodegaCtrl.obtenerBodegasArticulos);
 
 router.get("/bodegas_articulos/:id_bodega", bodegaCtrl.obtenerArticulosDeBodega);
 
-router.post("/bodegas_articulos", bodegaCtrl.crearBodegaArticulo);
+router.post("/bodegas_articulos", bodegaCtrl.crearArticuloDeBodega);
 
 router.put("/bodegas_articulos/:id", bodegaCtrl.actualizarBodegaArticulo);
 

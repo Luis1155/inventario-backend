@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.eliminarBodegaArticulo = exports.actualizarBodegaArticulo = exports.crearBodegaArticulo = exports.obtenerArticulosDeBodega = exports.obtenerBodegaArticulo = exports.obtenerBodegasArticulos = exports.eliminarBodega = exports.actualizarBodega = exports.crearBodega = exports.obtenerBodega = exports.obtenerBodegas = void 0;
+exports.eliminarBodegaArticulo = exports.actualizarBodegaArticulo = exports.crearArticuloDeBodega = exports.obtenerArticulosDeBodega = exports.obtenerBodegaArticulo = exports.obtenerBodegasArticulos = exports.eliminarBodega = exports.actualizarBodega = exports.crearBodega = exports.obtenerBodega = exports.obtenerBodegas = void 0;
 const Articulo_1 = __importDefault(require("../models/Articulo"));
 const Bodega_1 = __importDefault(require("../models/Bodega"));
 const BodegaArticulo_1 = __importDefault(require("../models/BodegaArticulo"));
@@ -124,16 +124,14 @@ const obtenerArticulosDeBodega = (req, res) => __awaiter(void 0, void 0, void 0,
             id_bodega: req.params.id_bodega,
         });
         if (articulosEncontrados.length == 0)
-            return res.status(404).json({
-                message: `Esta bodega no contiene articulos`,
-            });
+            return res.json([]);
         for (let i = 0; i < articulosEncontrados.length; i++) {
             let articulo = yield Articulo_1.default.findById(articulosEncontrados[i].id_articulo);
-            articulosEncontrados[i] = Object.assign(Object.assign({}, articulosEncontrados[i]._doc), { nombre: articulo.nombre, descripcion: articulo.descripcion, precio_unidad: articulo.precio_unidad });
+            articulosEncontrados[i] = Object.assign(Object.assign({}, articulosEncontrados[i]._doc), { nombre: articulo.nombre, descripcion: articulo.descripcion, identificador: articulo.identificador, precio_unidad: articulo.precio_unidad });
             delete articulosEncontrados[i]["createdAt"];
             delete articulosEncontrados[i]["updatedAt"];
         }
-        res.json(articulosEncontrados);
+        res.status(200).json(articulosEncontrados);
     }
     catch (error) {
         console.log(error);
@@ -143,14 +141,20 @@ const obtenerArticulosDeBodega = (req, res) => __awaiter(void 0, void 0, void 0,
     }
 });
 exports.obtenerArticulosDeBodega = obtenerArticulosDeBodega;
-const crearBodegaArticulo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const crearArticuloDeBodega = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const baEncontrada = yield BodegaArticulo_1.default.findOne({
             id_bodega: req.body.id_bodega,
-            id_articulo: req.body.id_articulo
+            id_articulo: req.body.id_articulo,
         });
-        if (baEncontrada)
-            return res.status(400).json({ message: "El elemento ya existe" });
+        if (baEncontrada) {
+            baEncontrada.cantidad =
+                baEncontrada.cantidad + parseInt(req.body.cantidad);
+            baEncontrada.save();
+            return res
+                .status(200)
+                .json({ message: "Elemento actualizado", error: false });
+        }
         const ba = new BodegaArticulo_1.default(req.body);
         const baGuardada = yield ba.save();
         res.json(baGuardada);
@@ -159,7 +163,7 @@ const crearBodegaArticulo = (req, res) => __awaiter(void 0, void 0, void 0, func
         res.status(400).json(error);
     }
 });
-exports.crearBodegaArticulo = crearBodegaArticulo;
+exports.crearArticuloDeBodega = crearArticuloDeBodega;
 const actualizarBodegaArticulo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const baActualizada = yield BodegaArticulo_1.default.findByIdAndUpdate(req.params.id, req.body, { new: true });
