@@ -69,7 +69,6 @@ export const crearTransaccion: RequestHandler = async (req, res) => {
     res.json(transaccionGuardado);
   } catch (error) {
     console.log(error);
-
-    res.status(400).json(error);
+    res.json(error);
   }
 };

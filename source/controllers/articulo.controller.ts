@@ -14,13 +14,15 @@ export const obtenerArticulo: RequestHandler = async (req, res) => {
   try {
     const articuloEncontrado = await Articulo.findById(req.params.id);
     if (!articuloEncontrado)
-      return res.status(404).json({
-        message: `El articulo con identificador ${req.params.id} no existe`,
+      return res.json({
+        message: `El articulo no existe`,
+        error: true,
       });
     res.json(articuloEncontrado);
   } catch (error) {
-    res.status(404).json({
-      message: `El articulo con identificador ${req.params.id} no existe`,
+    res.json({
+      message: `El articulo no existe`,
+      error: true,
     });
   }
 };
@@ -36,7 +38,7 @@ export const crearArticulo: RequestHandler = async (req, res) => {
     const articuloGuardado = await articulo.save();
     res.json(articuloGuardado);
   } catch (error: any) {
-    res.status(400).json(error);
+    res.json(error);
   }
 };
 
@@ -48,13 +50,15 @@ export const actualizarArticulo: RequestHandler = async (req, res) => {
       { new: true }
     );
     if (!articuloActualizado)
-      return res.status(404).json({
-        message: `El articulo con identificador ${req.params.id} no existe`,
+      return res.json({
+        message: `El articulo no existe`,
+        error: true,
       });
     res.json(articuloActualizado);
   } catch (error) {
-    res.status(404).json({
-      message: `El articulo con identificador ${req.params.id} no existe`,
+    res.json({
+      message: `El articulo no existe`,
+      error: true,
     });
   }
 };
@@ -63,13 +67,15 @@ export const eliminarArticulo: RequestHandler = async (req, res) => {
   try {
     const articuloEliminado = await Articulo.findByIdAndDelete(req.params.id);
     if (!articuloEliminado)
-      return res.status(404).json({
-        message: `El articulo con identificador ${req.params.id} no existe`,
+      return res.json({
+        message: `El articulo no existe`,
+        error: true,
       });
     res.json(articuloEliminado);
   } catch (error) {
-    return res.status(404).json({
-      message: `El articulo con identificador ${req.params.id} no existe`,
+    return res.json({
+      message: `El articulo no existe`,
+      error: true,
     });
   }
 };

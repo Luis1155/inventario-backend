@@ -16,13 +16,15 @@ export const obtenerBodega: RequestHandler = async (req, res) => {
   try {
     const bodegaEncontrada = await Bodega.findById(req.params.id);
     if (!bodegaEncontrada)
-      return res.status(404).json({
-        message: `La bodega con identificador ${req.params.id} no existe`,
+      return res.json({
+        message: `La bodega no existe`,
+        error: true,
       });
     res.json(bodegaEncontrada);
   } catch (error) {
-    res.status(404).json({
-      message: `La bodega con identificador ${req.params.id} no existe`,
+    res.json({
+      message: `La bodega no existe`,
+      error: true,
     });
   }
 };
@@ -35,12 +37,12 @@ export const crearBodega: RequestHandler = async (req, res) => {
     console.log(bodegaEncontrada);
 
     if (bodegaEncontrada)
-      return res.status(400).json({ message: "El identificador ya existe" });
+      return res.json({ message: "El identificador ya existe", error: true });
     const bodega = new Bodega(req.body);
     const bodegaGuardada = await bodega.save();
     res.json(bodegaGuardada);
   } catch (error: any) {
-    res.status(400).json(error);
+    res.json(error);
   }
 };
 
@@ -52,13 +54,15 @@ export const actualizarBodega: RequestHandler = async (req, res) => {
       { new: true }
     );
     if (!bodegaActualizada)
-      return res.status(404).json({
-        message: `La bodega con identificador ${req.params.id} no existe`,
+      return res.json({
+        message: `La bodega no existe`,
+        error: true,
       });
     res.json(bodegaActualizada);
   } catch (error) {
-    res.status(404).json({
-      message: `La bodega con identificador ${req.params.id} no existe`,
+    res.json({
+      message: `La bodega no existe`,
+      error: true,
     });
   }
 };
@@ -67,13 +71,15 @@ export const eliminarBodega: RequestHandler = async (req, res) => {
   try {
     const bodegaEliminada = await Bodega.findByIdAndDelete(req.params.id);
     if (!bodegaEliminada)
-      return res.status(404).json({
-        message: `La bodega con identificador ${req.params.id} no existe`,
+      return res.json({
+        message: `La bodega no existe`,
+        error: true,
       });
     res.json(bodegaEliminada);
   } catch (error) {
-    return res.status(404).json({
-      message: `La bodega con identificador ${req.params.id} no existe`,
+    return res.json({
+      message: `La bodega no existe`,
+      error: true,
     });
   }
 };
@@ -93,13 +99,15 @@ export const obtenerBodegaArticulo: RequestHandler = async (req, res) => {
   try {
     const baEncontrada = await BodegaArticulo.findById(req.params.id);
     if (!baEncontrada)
-      return res.status(404).json({
-        message: `El elemento con identificador ${req.params.id} no existe`,
+      return res.json({
+        message: `El elemento no existe`,
+        error: true,
       });
     res.json(baEncontrada);
   } catch (error) {
-    res.status(404).json({
-      message: `El elemento con identificador ${req.params.id} no existe`,
+    res.json({
+      message: `El elemento no existe`,
+      error: true,
     });
   }
 };
@@ -128,8 +136,9 @@ export const obtenerArticulosDeBodega: RequestHandler = async (req, res) => {
   } catch (error) {
     console.log(error);
 
-    res.status(404).json({
-      message: `El elemento con identificador ${req.params.id} no existe`,
+    res.json({
+      message: `El elemento no existe`,
+      error: true,
     });
   }
 };
@@ -152,7 +161,7 @@ export const crearArticuloDeBodega: RequestHandler = async (req, res) => {
     const baGuardada = await ba.save();
     res.json(baGuardada);
   } catch (error: any) {
-    res.status(400).json(error);
+    res.json(error);
   }
 };
 
@@ -164,13 +173,15 @@ export const actualizarBodegaArticulo: RequestHandler = async (req, res) => {
       { new: true }
     );
     if (!baActualizada)
-      return res.status(404).json({
-        message: `El elemento con identificador ${req.params.id} no existe`,
+      return res.json({
+        message: `El elemento no existe`,
+        error: true,
       });
     res.json(baActualizada);
   } catch (error) {
-    res.status(404).json({
-      message: `El elemento con identificador ${req.params.id} no existe`,
+    res.json({
+      message: `El elemento no existe`,
+      error: true,
     });
   }
 };
@@ -179,13 +190,15 @@ export const eliminarBodegaArticulo: RequestHandler = async (req, res) => {
   try {
     const baEliminada = await BodegaArticulo.findByIdAndDelete(req.params.id);
     if (!baEliminada)
-      return res.status(404).json({
-        message: `El elemento con identificador ${req.params.id} no existe`,
+      return res.json({
+        message: `El elemento no existe`,
+        error: true,
       });
     res.json(baEliminada);
   } catch (error) {
-    return res.status(404).json({
-      message: `El elemento con identificador ${req.params.id} no existe`,
+    return res.json({
+      message: `El elemento no existe`,
+      error: true,
     });
   }
 };
